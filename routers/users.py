@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from models.users import User
+from database import get_db
 
 router = APIRouter()
 
@@ -16,4 +19,11 @@ async def read_user_me():
 @router.get("/users/{username}", tags=["users"])
 async def read_user(username: str):
     return {"username": username}
+
+
+# 获取用户数据 - 查询数据库
+@router.get("/user-data", tags=["users"])
+async def get_users(db: Session = Depends(get_db)):
+    users = db.query(User).all()
+    return [user.to_dict() for user in users]
 
