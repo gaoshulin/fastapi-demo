@@ -5,9 +5,9 @@ class User(Base):
     __tablename__ = "user"
     
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50), unique=True, index=True)
+    username = Column(String(50), index=False)
     password = Column(String(150), index=False)
-    email = Column(String(100), unique=True, index=True)
+    email = Column(String(50), unique=True, index=True)
 
     # 将对象转换为字典, 并删除密码字段
     def to_dict(self):

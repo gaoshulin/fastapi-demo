@@ -18,13 +18,14 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# 创建基础模型
 Base = declarative_base()
 
 # Dependency    
 def get_db():
-    db = SessionLocal()
+    db = Session()
     try:
         yield db
     finally:
