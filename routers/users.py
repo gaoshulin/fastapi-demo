@@ -26,4 +26,3 @@ async def read_user(username: str):
 async def get_users(db: Session = Depends(get_db)):
     users = db.query(User).order_by(User.id.desc()).all()
     return [user.to_dict() for user in users]
-
